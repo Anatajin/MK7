@@ -1,0 +1,30 @@
+<?php
+@ini_set('max_execution_time', 300);
+@ini_set('memory_limit', '256M');
+@ini_set('display_errors', 0);
+@ini_set('log_errors', 1);
+
+
+header('Content-Type: application/json');
+
+try {
+    require_once __DIR__ . '/../config.php';
+    require_once __DIR__ . '/../includes/Database.php';
+    require_once __DIR__ . '/../includes/Scraper.php';
+
+    $db = new Database($pdo);
+    $scraper = new Scraper($db);
+
+    $date = $_GET['date'] ?? null;
+    $clearLogs = !defined('AUTO_SCRAPER');
+    $result = $scraper->scrapeLive($date, $clearLogs);
+    
+    echo json_encode($result, JSON_UNESCAPED_UNICODE);
+} catch (Exception $e) {
+    
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'خطأ في جلب البث المباشر: ' . $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
+}
+?>

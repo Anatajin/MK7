@@ -1,0 +1,15 @@
+# منع تصفح الملفات
+Options -Indexes
+
+# معالجة طلبات OPTIONS (preflight requests) سيتم التعامل معها في PHP
+# ولكن يمكن ترك إعادة التوجيه لضمان وصول الطلبات للملفات الصحيحة
+RewriteEngine On
+
+# توجيه get_data.php إلى get (Redirect)
+RewriteRule ^get_data\.php$ get [R=301,L,NC]
+
+# السماح بالوصول لـ get بدون .php
+RewriteRule ^get/?$ get.php [QSA,L]
+
+# في حال طلب أي شيء آخر غير موجود، يمكن توجيهه للرئيسي أو تركه يعطي 404 لضمان النظافة
+# RewriteRule ^(.*)$ get.php [QSA,L] 

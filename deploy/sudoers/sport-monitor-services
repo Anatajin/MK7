@@ -1,0 +1,13 @@
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl start sport-smart-runner.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl stop sport-smart-runner.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl restart sport-smart-runner.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl start sport-auto-scraper.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl stop sport-auto-scraper.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl restart sport-auto-scraper.service
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl restart nginx
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl restart php8.3-fpm
+www-data ALL=(root) NOPASSWD: /usr/bin/journalctl -u sport-smart-runner.service -n 40 --no-pager
+www-data ALL=(root) NOPASSWD: /usr/bin/journalctl -u sport-auto-scraper.service -n 40 --no-pager
+www-data ALL=(root) NOPASSWD: /usr/bin/journalctl -u nginx -n 40 --no-pager
+www-data ALL=(root) NOPASSWD: /usr/bin/journalctl -u php8.3-fpm -n 40 --no-pager
+www-data ALL=(root) NOPASSWD: /usr/local/sbin/sport-sync-firewall-blocks

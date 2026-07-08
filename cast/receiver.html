@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haya Shoout Cast Receiver</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+        }
+
+        cast-media-player {
+            --theme-hue: 220;
+            --splash-image: none;
+            --spinner-color: #ffffff;
+            --progress-color: #ffffff;
+            --background-image: none;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+    </style>
+    <script type="text/javascript"
+        src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+</head>
+
+<body>
+    <cast-media-player></cast-media-player>
+    <script>
+        const context = cast.framework.CastReceiverContext.getInstance();
+        const playerManager = context.getPlayerManager();
+        const playbackConfig = new cast.framework.PlaybackConfig();
+
+        // Favor faster live startup on Chromecast without changing the
+        // website playback path. The receiver can tolerate a smaller initial
+        // buffer than browsers because reconnection is already handled by the
+        // cast sender path and signed proxy URLs.
+        playbackConfig.autoResumeNumberOfSegments = 1;
+        playbackConfig.autoResumeDuration = 0.1;
+        playbackConfig.shakaConfig = {
+            streaming: {
+                bufferingGoal: 5,
+                rebufferingGoal: 1,
+                lowLatencyMode: true
+            }
+        };
+
+        playerManager.setMessageInterceptor(
+            cast.framework.messages.MessageType.LOAD,
+            request => {
+                if (!request || !request.media) {
+                    return request;
+                }
+
+                request.autoplay = true;
+                request.media.streamType = cast.framework.messages.StreamType.LIVE;
+                request.media.hlsSegmentFormat =
+                    cast.framework.messages.HlsSegmentFormat.TS;
+                request.media.hlsVideoSegmentFormat =
+                    cast.framework.messages.HlsSegmentFormat.TS;
+                request.media.hlsAudioSegmentFormat =
+                    cast.framework.messages.HlsSegmentFormat.TS;
+                request.media.duration = -1;
+                request.media.metadata = request.media.metadata || new chrome.cast.media.GenericMediaMetadata();
+                request.media.metadata.title = request.media.metadata.title || 'Live Stream';
+                return request;
+            }
+        );
+
+        context.start({
+            disableIdleTimeout: true,
+            playbackConfig: playbackConfig
+        });
+    </script>
+</body>
+
+</html>

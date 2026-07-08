@@ -1,0 +1,24 @@
+# Cloudways SAFE .htaccess (MINIMAL)
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+# 1. Prevent Directory Listing (Hides the list of files in folders)
+Options -Indexes
+
+# Custom Error Pages
+ErrorDocument 403 /sport/403.php
+ErrorDocument 404 /sport/403.php
+
+# 2. Block direct access to config.php
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# 3. Block access to error logs
+<Files "error_log.txt">
+    Require all denied
+</Files>

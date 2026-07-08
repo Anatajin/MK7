@@ -1,0 +1,18 @@
+[Unit]
+Description=SPORT Auto Scraper Service
+After=network.target mariadb.service mysql.service php8.3-fpm.service nginx.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+EnvironmentFile=-/etc/sport-app.env
+WorkingDirectory=/var/www/sport-app/current/api
+Environment=AUTO_SCRAPER_RUNTIME_DIR=/var/lib/sport-auto-scraper
+ExecStart=/usr/bin/php /var/www/sport-app/current/api/auto_scraper_service.php
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,226 @@
+/* Documentation Tabs */
+.docs-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    border-radius: 14px;
+    gap: 5px;
+    margin-bottom: 25px;
+    width: fit-content;
+}
+
+.docs-tab {
+    padding: 10px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    background: transparent;
+}
+
+.docs-tab:hover {
+    color: var(--accent);
+}
+
+.docs-tab.active {
+    background: white;
+    color: var(--accent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: slideUpFade 0.4s ease;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Base Code Window (Dark Theme - Default) */
+.code-window {
+    background: #0f172a;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.code-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot-red {
+    background: #ff5f56;
+}
+
+.dot-yellow {
+    background: #ffbd2e;
+}
+
+.dot-green {
+    background: #27c93f;
+}
+
+.code-body {
+    padding: 25px;
+    margin: 0;
+    overflow-x: auto;
+}
+
+.code-content {
+    color: #e2e8f0;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre;
+}
+
+/* Syntax Highlighting (Dark) */
+.code-content .keyword {
+    color: #c678dd;
+    font-weight: bold;
+}
+
+.code-content .function {
+    color: #61afef;
+}
+
+.code-content .string {
+    color: #98c379;
+}
+
+.code-content .variable {
+    color: #e06c75;
+}
+
+.code-content .comment {
+    color: #7f848e;
+    font-style: italic;
+}
+
+.code-content .constant {
+    color: #d19a66;
+}
+
+.code-content .operator {
+    color: #56b6c2;
+}
+
+/* Light Theme Overrides */
+.code-window.light {
+    background: #f8fafc;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.code-window.light .code-header {
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.code-window.light .code-content {
+    color: #334155;
+}
+
+.code-window.light .code-content .keyword {
+    color: #7c3aed;
+}
+
+.code-window.light .code-content .function {
+    color: #2563eb;
+}
+
+.code-window.light .code-content .string {
+    color: #059669;
+}
+
+.code-window.light .code-content .variable {
+    color: #dc2626;
+}
+
+.code-window.light .code-content .comment {
+    color: #94a3b8;
+}
+
+.code-window.light .code-content .constant {
+    color: #d97706;
+}
+
+.code-window.light .code-content .operator {
+    color: #0891b2;
+}
+
+/* Buttons */
+.code-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.copy-btn,
+.theme-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    padding: 6px 15px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.code-window.light .copy-btn,
+.code-window.light .theme-btn {
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.copy-btn:hover,
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.code-window.light .copy-btn:hover,
+.code-window.light .theme-btn:hover {
+    background: #f8fafc;
+    color: var(--accent);
+    border-color: var(--accent);
+}

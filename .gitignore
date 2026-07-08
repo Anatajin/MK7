@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Local PHP/application secrets
+config.php
+.env
+.env.*
+
+# Runtime data, caches, and logs
+.api-response-cache/
+.monitoring/
+.puppeteer-runtime/
+.puppeteer-cache/
+tmp_screens/
+*.log
+api/*.log
+
+# Browser automation profiles
+chrome_profile_clone/
+opera_profile_clone/
+
+# Generated scraper/session state
+includes/scraper_cookies.txt
+admin/smart_runner_state.json
+admin/smart_runner_workers.json
+
+# Database dumps and local backups
+database/*.sql
+api/*.sql
+*.sql
+*.bak
+*.backup
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

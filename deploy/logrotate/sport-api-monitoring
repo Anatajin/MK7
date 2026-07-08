@@ -1,0 +1,11 @@
+/var/www/html/.monitoring/api_metrics.log {
+    su www-data www-data
+    daily
+    size 50M
+    rotate 14
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+}

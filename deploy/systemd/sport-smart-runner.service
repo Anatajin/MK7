@@ -1,0 +1,19 @@
+[Unit]
+Description=SPORT Smart Runner Service
+After=network.target mariadb.service mysql.service php8.3-fpm.service nginx.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+EnvironmentFile=-/etc/sport-app.env
+WorkingDirectory=/var/www/sport-app/current/admin
+Environment=SMART_RUNNER_RUNTIME_DIR=/var/lib/sport-smart-runner
+Environment=SMART_RUNNER_CLIENT_ID=server_worker
+ExecStart=/usr/bin/php /var/www/sport-app/current/admin/smart_runner_service.php
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

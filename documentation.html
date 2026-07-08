@@ -1,0 +1,3303 @@
+?
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | Haya Cloud APIs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+        /* Fixed Main Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-strong);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            z-index: 2100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: #f1f5f9;
+            border: none;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-main);
+            align-items: center;
+            justify-content: center;
+            order: 1;
+        }
+
+        .header-right-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: var(--sidebar-width);
+        }
+
+        .brand-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .header-center-nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            padding: 0 60px;
+        }
+
+        .top-search-bar {
+            width: 100%;
+            max-width: 650px;
+            position: relative;
+        }
+
+        .top-search-bar input {
+            width: 100%;
+            padding: 10px 45px 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border-strong);
+            background: #f8fafc;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .top-search-bar input:focus {
+            background: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .top-search-bar i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .header-left-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: var(--right-sidebar-width);
+            justify-content: flex-end;
+        }
+
+        .lang-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--border-strong);
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .lang-pill:hover {
+            border-color: var(--accent);
+            background: #fff;
+        }
+
+        .lang-pill i {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .lang-pill select {
+            background: transparent;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-left: 5px;
+            /* Space for hidden arrow area */
+        }
+
+        :root {
+            /* Modernized Color Palette */
+            --bg: #ffffff;
+            --sidebar-bg: #f8fafc;
+            --sidebar-active: #ffffff;
+            --border: #f1f5f9;
+            --border-strong: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: blue;
+            /* Indigo accent */
+            --accent-glow: rgba(79, 70, 229, 0.15);
+            --code-bg: #111b27;
+            --sidebar-width: 260px;
+            --right-sidebar-width: 240px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Google Sans', system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #202124;
+        }
+
+        /* Sidebar Refinement */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-left: 1px solid var(--border-strong);
+            position: fixed;
+            height: calc(100vh - 64px);
+            overflow-y: auto;
+            top: 64px;
+            right: 0;
+            padding: 20px 0;
+            z-index: 1000;
+        }
+
+        .nav-group {
+            margin-bottom: 32px;
+        }
+
+        .nav-label {
+            padding: 0 28px 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0 12px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: var(--radius-md);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-menu a:hover {
+            color: var(--text-main);
+            background: #f1f5f9;
+            transform: translateX(-4px);
+        }
+
+        .sidebar-menu a.active {
+            color: var(--text-main);
+            background: #f1f5f9;
+            font-weight: 600;
+            box-shadow: none;
+            border-radius: var(--radius-md) 0 0 var(--radius-md);
+            border-right: 3px solid #c7d1db;
+        }
+
+        /* Premium Nav Style from Image */
+        .premium-nav {
+            gap: 12px;
+            margin-bottom: 8px !important;
+        }
+
+        .premium-nav.active {
+            color: #1e293b !important;
+        }
+
+        .nav-icon-wrapper {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .icon-doc,
+        .icon-auth {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            margin-left: var(--right-sidebar-width);
+            padding: 100px 40px 64px;
+            width: calc(100% - var(--sidebar-width) - var(--right-sidebar-width));
+            max-width: 1000px;
+            flex-grow: 1;
+        }
+
+        /* Right Sidebar (Actions & TOC) */
+        .right-sidebar {
+            width: var(--right-sidebar-width);
+            position: fixed;
+            height: calc(100vh - 64px);
+            top: 64px;
+            left: 0;
+            background: #fff;
+            border-right: 1px solid var(--border-strong);
+            padding: 32px 20px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 35px 10px 15px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-strong);
+            background: #f8fafc;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .action-group {
+            margin-bottom: 30px;
+        }
+
+        .action-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-download {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: #fff;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-lg);
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-download:hover {
+            background: #f1f5f9;
+            border-color: var(--text-muted);
+        }
+
+        .btn-download i {
+            color: var(--accent);
+        }
+
+        .toc-container {
+            margin-bottom: 40px;
+        }
+
+        .toc-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+            letter-spacing: 0.05em;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li a {
+            display: block;
+            padding: 6px 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            border-right: 2px solid transparent;
+            padding-right: 10px;
+        }
+
+        .toc-list li a:hover {
+            color: var(--text-main);
+            padding-right: 14px;
+        }
+
+        .toc-list li a.active {
+            color: var(--text-main);
+            border-right-color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .back-to-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+            padding: 12px 15px;
+            border-radius: var(--radius-md);
+            background: #f8fafc;
+            border: 1px solid var(--border-strong);
+            margin-top: 20px;
+        }
+
+        .back-to-top:hover {
+            color: var(--accent);
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        section {
+            padding-bottom: 34px;
+            margin-bottom: 34px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .endpoint-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            background: var(--text-main);
+            padding: 7px;
+            border-radius: var(--radius-lg);
+            width: fit-content;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-strong);
+            direction: ltr;
+            box-shadow: var(--shadow-sm);
+            color: white;
+        }
+
+        .method {
+            color: rgb(255, 255, 255);
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Tables Modernization */
+        .table-container {
+            margin: 24px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-strong);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        th {
+            text-align: right;
+            padding: 14px 20px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-strong);
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            color: #475569;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #f1f5f9;
+            padding: 3px 6px;
+            border-radius: 6px;
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        /* Modern Code Window Style from Image */
+        .preview-window {
+            background: #111b27;
+            border-radius: 24px;
+            margin: 30px 0;
+            position: relative;
+            padding: 50px 0 25px;
+            /* Top padding for icons, 0 side padding for lines */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .preview-header {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: flex-start;
+            /* Icons on the left */
+            align-items: center;
+            gap: 12px;
+            border: none;
+            background: transparent;
+            z-index: 10;
+        }
+
+        .preview-header span {
+            display: none;
+        }
+
+        .window-dots {
+            display: none;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: rgba(148, 163, 184, 0.5);
+            /* Semi-transparent */
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .preview-body {
+            padding: 0;
+            overflow-x: auto;
+            direction: ltr;
+        }
+
+        .preview-body pre {
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.25;
+            /* Tightened line height as per manual user edit */
+            margin: 0;
+            counter-reset: line;
+            display: block;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            /* Space for scrollbar */
+        }
+
+        /* Custom Scrollbar for Code Blocks */
+        .preview-body pre::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .preview-body pre::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .preview-body pre::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .preview-body pre::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .preview-body pre .line {
+            display: block;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .preview-body pre .line::before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 0;
+            width: 35px;
+            text-align: right;
+            color: #334155;
+            /* Even more subtle line numbers */
+            user-select: none;
+            font-size: 0.75rem;
+        }
+
+        /* Syntax colors from image */
+        .hl-key {
+            color: #4fd1c5;
+        }
+
+        /* Teal */
+        .hl-str {
+            color: #ecc94b;
+        }
+
+        /* Yellow/Gold */
+        .hl-num {
+            color: #f6ad55;
+        }
+
+        /* Orange */
+        .hl-bool {
+            color: #f687b3;
+        }
+
+        /* Pink */
+        .hl-func {
+            color: #f56565;
+        }
+
+        /* Coral/Red for functions */
+        .hl-comment {
+            color: #64748b;
+        }
+
+        /* Callout / Tip Style Modernized */
+        .callout {
+            background-color: #f8fafc;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 32px 0;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .callout-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #8199af;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .callout-header i {
+            font-size: 1.25rem;
+        }
+
+        .callout-content {
+            color: #111827;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .callout-content a {
+            color: #4d5d3c;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .hl-key {
+            color: #818cf8;
+        }
+
+        .hl-str {
+            color: #34d399;
+        }
+
+        .hl-num {
+            color: #fbbf24;
+        }
+
+        .hl-bool {
+            color: #f472b6;
+        }
+
+        @media (max-width: 1200px) {
+            .right-sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: calc(100% - var(--sidebar-width));
+            }
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+
+            .main-header {
+                padding: 0 20px;
+            }
+
+            .header-center-nav {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .header-right-brand {
+                width: auto;
+                order: 2;
+            }
+
+            .header-center-nav {
+                display: none;
+            }
+
+            .header-left-actions {
+                width: auto;
+                order: 3;
+            }
+
+            .sidebar {
+                right: -280px;
+                width: 280px;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 20px rgba(0, 0, 0, 0.05);
+                position: fixed;
+                top: 0;
+                height: 100vh;
+                background: #fff;
+            }
+
+            .sidebar.open {
+                transform: translateX(-280px);
+            }
+
+            .main-content {
+                margin-right: 0;
+                width: 100%;
+                padding: 90px 20px 40px;
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(15, 23, 42, 0.5);
+                backdrop-filter: blur(4px);
+                z-index: 999;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <button class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-right-brand">
+            <span class="brand-text">Haya Cloud APIs</span>
+        </div>
+        <div class="header-center-nav">
+            <div class="top-search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="mainSearch" placeholder="ابحث في التوثيق (مثلاً: matches, auth)...">
+            </div>
+        </div>
+        <div class="header-left-actions">
+            <div class="lang-pill">
+                <i class="fas fa-globe"></i>
+                <select>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="right-sidebar">
+
+        <div class="action-group">
+            <span class="action-label">تحميل التوثيق</span>
+            <button class="btn-download" id="downloadMd">
+                <svg viewBox="-4 0 64 64" xmlns="http://www.w3.org/2000/svg"
+                    style="width: 20px; height: 20px; margin-left: 8px;">
+                    <g fill-rule="evenodd" clip-rule="evenodd">
+                        <path
+                            d="M5.113.007c-2.803 0-5.074 2.271-5.074 5.074v53.84c0 2.803 2.271 5.074 5.074 5.074h45.774c2.801 0 5.074-2.271 5.074-5.074v-38.606l-18.903-20.308h-31.945z"
+                            fill="#8199AF"></path>
+                        <path d="M55.976 20.352v1h-12.799s-6.312-1.26-6.129-6.707c0 0 .208 5.707 6.004 5.707h12.924z"
+                            fill="#617F9B"></path>
+                        <path d="M37.074 0v14.561c0 1.656 1.104 5.791 6.104 5.791h12.799l-18.903-20.352z" opacity=".5"
+                            fill="#ffffff"></path>
+                    </g>
+                    <text x="52%" y="54" font-family="Arial, sans-serif" font-weight="900" font-size="16" fill="white"
+                        text-anchor="middle">MD</text>
+                </svg>
+                Download Md
+            </button>
+            <button class="btn-download" id="downloadTxt">
+                <svg viewBox="-4 0 64 64" xmlns="http://www.w3.org/2000/svg"
+                    style="width: 20px; height: 20px; margin-left: 8px;">
+                    <path
+                        d="M5.151-.036c-2.803 0-5.074 2.272-5.074 5.074v53.841c0 2.803 2.271 5.074 5.074 5.074h45.774c2.801 0 5.074-2.271 5.074-5.074v-38.605l-18.902-20.31h-31.946z"
+                        fill-rule="evenodd" clip-rule="evenodd" fill="#F9CA06"></path>
+                    <g fill-rule="evenodd" clip-rule="evenodd">
+                        <path d="M56.008 20.316v1h-12.799s-6.312-1.26-6.129-6.708c0 0 .208 5.708 6.004 5.708h12.924z"
+                            fill="#F7BC04"></path>
+                        <path d="M37.106-.036v14.561c0 1.656 1.104 5.792 6.104 5.792h12.799l-18.903-20.353z"
+                            opacity=".5" fill="#ffffff"></path>
+                    </g>
+                    <path
+                        d="M18.763 43.045h-3.277v10.047c0 .414-.324.738-.756.738-.414 0-.738-.324-.738-.738v-10.047h-3.259c-.36 0-.648-.288-.648-.684 0-.36.288-.648.648-.648h8.03c.36 0 .648.288.648.685 0 .359-.288.647-.648.647zm11.7 10.803c-.216 0-.415-.089-.541-.27l-3.727-4.97-3.745 4.97c-.126.181-.324.27-.54.27-.396 0-.72-.306-.72-.72 0-.144.036-.306.144-.432l3.889-5.131-3.619-4.826c-.09-.126-.144-.27-.144-.414 0-.343.288-.721.72-.721.216 0 .432.108.576.288l3.439 4.627 3.439-4.646c.126-.18.324-.27.541-.27.378 0 .738.306.738.721 0 .144-.036.288-.126.414l-3.619 4.808 3.89 5.149c.09.126.126.27.126.415 0 .396-.325.738-.721.738zm11.195-10.803h-3.277v10.047c0 .414-.323.738-.756.738-.414 0-.738-.324-.738-.738v-10.047h-3.259c-.36 0-.648-.288-.648-.684 0-.36.288-.648.648-.648h8.03c.36 0 .648.288.648.685.001.359-.287.647-.648.647z"
+                        fill="#ffffff"></path>
+                </svg>
+                Download Txt
+            </button>
+        </div>
+
+        <div class="toc-container">
+            <span class="toc-label">في هذه الصفحة</span>
+            <ul class="toc-list" id="tocList">
+                <!-- Generated dynamically -->
+            </ul>
+        </div>
+
+        <a href="#" class="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+            العودة للأعلى
+        </a>
+    </aside>
+
+    <aside class="sidebar">
+        <div class="nav-group">
+            <div class="nav-label">عام</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#intro" class="active premium-nav">
+                        <div class="nav-icon-wrapper icon-doc">
+                            <svg viewBox="0 0 24 24" id="Artwork" xmlns="http://www.w3.org/2000/svg" fill="#000000"
+                                style="width: 22px; height: 22px;">
+                                <polygon points="16.38 5.77 11.29 18.22 12.71 5.77 16.38 5.77"
+                                    style="fill:#646ef7;fill-rule:evenodd"></polygon>
+                                <polygon points="12.71 5.77 11.29 18.22 7.62 18.22 12.71 5.77"
+                                    style="fill:#aeb9f9;fill-rule:evenodd"></polygon>
+                                <path d="M3.71,14.65,2.25,18.22H4.82l.41-3.57Z" style="fill:#f9f4ae;fill-rule:evenodd">
+                                </path>
+                                <polygon points="5.83 9.49 5.42 13.07 4.35 13.07 5.83 9.49"
+                                    style="fill:#f9aeae;fill-rule:evenodd"></polygon>
+                                <polygon points="9.48 9.49 9.47 9.52 8.02 13.07 5.42 13.07 5.83 9.49 9.48 9.49"
+                                    style="fill:#f76464;fill-rule:evenodd"></polygon>
+                                <polygon points="21.75 5.77 16.65 18.23 18.08 5.77 21.75 5.77"
+                                    style="fill:#6ef764;fill-rule:evenodd"></polygon>
+                                <polygon points="18.08 5.77 16.65 18.23 12.98 18.23 18.08 5.77"
+                                    style="fill:#b0f9ae;fill-rule:evenodd"></polygon>
+                                <polygon points="7.38 14.65 5.91 18.22 4.82 18.22 5.23 14.65 7.38 14.65"
+                                    style="fill:#f76464;fill-rule:evenodd"></polygon>
+                            </svg>
+                        </div>
+                        <span>مقدمة التوثيق</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#auth" class="premium-nav">
+                        <div class="nav-icon-wrapper icon-auth">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"
+                                style="width: 22px; height: 22px;">
+                                <defs>
+                                    <style>
+                                        .cls-1 {
+                                            fill: #669df6;
+                                        }
+
+                                        .cls-1,
+                                        .cls-2 {
+                                            fill-rule: evenodd;
+                                        }
+
+                                        .cls-2 {
+                                            fill: #4285f4;
+                                        }
+                                    </style>
+                                </defs>
+                                <g data-name="Product Icons">
+                                    <g>
+                                        <path class="cls-1"
+                                            d="M12,2,3.79,5.42v5.63c0,5.06,3.5,9.8,8.21,11,4.71-1.15,8.21-5.89,8.21-10.95V5.42Zm0,3.79a2.63,2.63,0,1,1-1.86.77A2.63,2.63,0,0,1,12,5.79Zm4.11,11.15A8.64,8.64,0,0,1,12,19.87a8.64,8.64,0,0,1-4.11-2.93V14.69c0-1.67,2.74-2.52,4.11-2.52s4.11.85,4.11,2.52v2.25Z">
+                                        </path>
+                                        <path class="cls-2"
+                                            d="M12,2V5.79a2.63,2.63,0,1,1,0,5.26v1.12c1.37,0,4.11.85,4.11,2.52v2.25A8.64,8.64,0,0,1,12,19.87V22c4.71-1.15,8.21-5.89,8.21-10.95V5.42Z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <span>المصادقة - Auth</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">نقاط الوصول (Endpoints)</div>
+            <ul class="sidebar-menu">
+                <li><a href="#matches"><i class="far fa-calendar-check" style="margin-left: 10px; opacity: 0.7;"></i>
+                        قائمة المباريات</a></li>
+                <li><a href="#match"><i class="fas fa-info-circle" style="margin-left: 10px; opacity: 0.7;"></i> تفاصيل
+                        مباراة</a></li>
+                <li><a href="#events"><i class="fas fa-running" style="margin-left: 10px; opacity: 0.7;"></i> أحداث
+                        المباراة</a></li>
+                <li><a href="#lineups"><i class="fas fa-users-cog" style="margin-left: 10px; opacity: 0.7;"></i> تشكيلات
+                        الفرق</a></li>
+                <li><a href="#stats"><i class="fas fa-chart-bar" style="margin-left: 10px; opacity: 0.7;"></i> إحصائيات
+                        المباراة</a></li>
+                <li><a href="#h2h"><i class="fas fa-history" style="margin-left: 10px; opacity: 0.7;"></i> المواجهات
+                        السابقة</a></li>
+                <li><a href="#standings"><i class="fas fa-list-ol" style="margin-left: 10px; opacity: 0.7;"></i> جدول
+                        الترتيب</a></li>
+                <li><a href="#leagues_standings"><i class="fas fa-trophy" style="margin-left: 10px; opacity: 0.7;"></i>
+                        قائمة الترتيب العام</a></li>
+                <li><a href="#live"><i class="fas fa-broadcast-tower" style="margin-left: 10px; opacity: 0.7;"></i> البث
+                        المباشر</a></li>
+                <li><a href="#leagues"><i class="fas fa-futbol" style="margin-left: 10px; opacity: 0.7;"></i> قائمة
+                        الدوريات</a></li>
+                <li><a href="#teams"><i class="fas fa-shield-alt" style="margin-left: 10px; opacity: 0.7;"></i> قائمة
+                        الفرق</a></li>
+                <li><a href="#countries"><i class="fas fa-globe-africa" style="margin-left: 10px; opacity: 0.7;"></i>
+                        قائمة الدول</a></li>
+                <li><a href="#players"><i class="fas fa-user-search" style="margin-left: 10px; opacity: 0.7;"></i> البحث
+                        عن اللاعبين</a></li>
+                <li><a href="#news"><i class="far fa-newspaper" style="margin-left: 10px; opacity: 0.7;"></i>
+                        الأخبار</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <section id="intro">
+            <h1>توثيق البرمجية (API Documentation)</h1>
+            <p>مرحباً بك في توثيق API الخاص بـ Haya Cloud APIs. يوفر هذا الـ API وصولاً فورياً لبيانات كرة القدم.</p>
+            <div class="endpoint-row"><span class="method">BASE URL</span> https://your-domain.com/api/get
+            </div>
+        </section>
+
+        <section id="auth">
+            <h2>المصادقة (Authentication)</h2>
+            <p>المصادقة مطلوبة لجميع طلبات الـ API. يمكنك التحقق باستخدام ترويسة HTTP مخصصة أو عبر معامل في الرابط.</p>
+
+            <h3>1. ترويسة HTTP (الخيار الموصى به)</h3>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    يُنصح باستخدام <code>X-API-Key</code> في ترويسة الطلب كأفضل ممارسة أمنية، بدلاً من إرسال المفتاح عبر
+                    الرابط.
+                </div>
+            </div>
+
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">Request
+                        Header</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span class="hl-key">X-API-Key:</span> <span class="hl-str">YOUR_API_KEY_HERE</span></pre>
+                </div>
+            </div>
+
+            <h3>2. معامل الرابط (Query Parameter)</h3>
+            <p>مرر مفتاح الـ API باستخدام معامل <code>api_key</code> في الرابط.</p>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">GET Request</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>GET /api/get?<span class="hl-key">api_key</span>=<span class="hl-str">YOUR_API_KEY_HERE</span>&action=matches</pre>
+                </div>
+            </div>
+
+            <h3>استجابة "غير مصرح به" (Unauthorized Response)</h3>
+            <p>إذا كان مفتاح الـ API مفقوداً أو غير صالح، ستتلقى استجابة <code>401 Unauthorized</code>.</p>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"error"</span>,
+  <span class="hl-key">"message"</span>: <span class="hl-str">"Unauthorized: Invalid API Key"</span>
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال PHP (الطريقة الموصى بها)</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span> = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$url</span>    = <span class="hl-str">"https://your-domain.com/api/get?action=matches"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [
+        <span class="hl-str">"X-API-Key: {$apiKey}"</span>
+    ],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">echo</span> <span class="hl-key">$response</span>;
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="matches">
+            <h2>قائمة المباريات (Matches List)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=matches&date=2026-02-21</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    جلب قائمة المباريات لتاريخ محدد مع جميع البيانات الأساسية والروابط.
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-globe"></i> Timezone by Visitor
+                </div>
+                <div class="callout-content">
+                    Pass one of these values when you want match times to follow the visitor who is requesting your site:
+                    <ul style="margin:0.75rem 0 0 1rem;">
+                        <li><code>X-Timezone</code> or <code>timezone</code> if you already know the exact timezone.</li>
+                        <li><code>X-Country-Code</code> or <code>country_code</code> if you only know the visitor country.</li>
+                        <li><code>X-Forwarded-For</code> or <code>CF-Connecting-IP</code> only when you also send <code>X-Auto-Timezone: ip</code> or <code>auto_timezone=ip</code>.</li>
+                    </ul>
+                    Resolution order: <code>timezone</code> then <code>country_code</code> then visitor IP when explicitly enabled.
+                    If you do not pass any timezone hints, the API returns times in <code>UTC</code> by default.
+                    If your website calls the API from its own backend, you must forward the visitor timezone or country. Forward visitor IP only when you intentionally enable IP-based timezone detection.
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المعامل (Parameter)</th>
+                            <th>النوع (Type)</th>
+                            <th>مطلوب (Required)</th>
+                            <th>الوصف (Description)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>date</code></td>
+                            <td>String</td>
+                            <td>لا</td>
+                            <td>صيغة YYYY-MM-DD (الافتراضي: تاريخ اليوم)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"date"</span>: <span class="hl-str">"2026-02-21"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">3</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">1024</span>,
+      <span class="hl-key">"home_team"</span>: <span class="hl-str">"الأهلي"</span>,
+      <span class="hl-key">"away_team"</span>: <span class="hl-str">"الزمالك"</span>,
+      <span class="hl-key">"home_score"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"away_score"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"match_status"</span>: <span class="hl-str">"Finished"</span>,
+      <span class="hl-key">"match_time"</span>: <span class="hl-str">"67'"</span>,
+      <span class="hl-key">"details_match_time"</span>: <span class="hl-str">"13:45"</span>,
+      <span class="hl-key">"league_name"</span>: <span class="hl-str">"الدوري المصري"</span>,
+      <span class="hl-key">"home_logo"</span>: <span class="hl-str">"https://example.com/logos/ahly.png"</span>,
+      <span class="hl-key">"away_logo"</span>: <span class="hl-str">"https://example.com/logos/zamalek.png"</span>,
+      <span class="hl-key">"league_logo"</span>: <span class="hl-str">"https://example.com/logos/epl.png"</span>
+    },
+    <span style="color:#64748b;">// ... more matches</span>
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span>        = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$date</span>          = <span class="hl-str">"2026-02-21"</span>;
+<span class="hl-key">$viewerIp</span>      = <span class="hl-key">$_SERVER</span>[<span class="hl-str">'REMOTE_ADDR'</span>] ?? <span class="hl-str">"8.8.8.8"</span>;
+<span class="hl-key">$viewerCountry</span> = <span class="hl-key">$_SERVER</span>[<span class="hl-str">'HTTP_CF_IPCOUNTRY'</span>] ?? <span class="hl-str">"US"</span>;
+<span class="hl-key">$url</span>           = <span class="hl-str">"https://your-domain.com/api/get?action=matches&amp;date={$date}"</span>;
+
+<span style="color:#64748b;">// Initialize cURL</span>
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [
+        <span class="hl-str">"X-API-Key: {$apiKey}"</span>,
+        <span class="hl-str">"Content-Type: application/json"</span>,
+        <span class="hl-str">"X-Forwarded-For: {$viewerIp}"</span>,
+        <span class="hl-str">"X-Country-Code: {$viewerCountry}"</span>,
+        <span style="color:#64748b;">// Optional: "X-Timezone: Asia/Dubai"</span>
+        <span style="color:#64748b;">// Optional: "X-Auto-Timezone: ip"</span>
+    ],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span class="hl-key">$httpCode</span> = <span style="color:#67e8f9;">curl_getinfo</span>(<span class="hl-key">$ch</span>, <span class="hl-num">CURLINFO_HTTP_CODE</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$httpCode</span> === <span class="hl-num">200</span>) {
+    <span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$match</span>) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-key">$match</span>[<span class="hl-str">'home_team'</span>]
+           . <span class="hl-str">" vs "</span>
+           . <span class="hl-key">$match</span>[<span class="hl-str">'away_team'</span>]
+           . <span class="hl-str">" — "</span>
+           . <span class="hl-key">$match</span>[<span class="hl-str">'match_status'</span>]
+           . <span class="hl-str">"\n"</span>;
+    }
+} <span style="color:#f472b6;">else</span> {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"Error: HTTP {$httpCode}\n"</span>;
+    <span style="color:#67e8f9;">echo</span> <span class="hl-key">$response</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="match">
+            <h2>تفاصيل مباراة واحدة (Single Match)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=match&id=1024</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    إعدادات المباراة الكاملة والبيانات الأساسية، مع إمكانية تضمين جدول الترتيب.
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المعامل (Parameter)</th>
+                            <th>النوع (Type)</th>
+                            <th>مطلوب (Required)</th>
+                            <th>الوصف (Description)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>id</code></td>
+                            <td>Int</td>
+                            <td>نعم</td>
+                            <td>المعرف الفريد للمباراة</td>
+                        </tr>
+                        <tr>
+                            <td><code>include_standings</code></td>
+                            <td>Bool</td>
+                            <td>لا</td>
+                            <td>تضمين جدول الترتيب الدوري</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"data"</span>: {
+    <span class="hl-key">"id"</span>: <span class="hl-num">1024</span>,
+    <span class="hl-key">"home_team"</span>: <span class="hl-str">"الأهلي"</span>,
+    <span class="hl-key">"away_team"</span>: <span class="hl-str">"الزمالك"</span>,
+    <span class="hl-key">"home_score"</span>: <span class="hl-num">2</span>,
+    <span class="hl-key">"away_score"</span>: <span class="hl-num">1</span>,
+    <span class="hl-key">"match_status"</span>: <span class="hl-str">"Finished"</span>,
+    <span class="hl-key">"match_details"</span>: {
+      <span class="hl-key">"league_name"</span>: <span class="hl-str">"الدوري المصري الممتاز"</span>,
+      <span class="hl-key">"league_logo"</span>: <span class="hl-str">"https://example.com/league.png"</span>,
+      <span class="hl-key">"stadium"</span>: <span class="hl-str">"استاد القاهرة الدولي"</span>,
+      <span class="hl-key">"channel"</span>: <span class="hl-str">"OnTime Sports"</span>,
+      <span class="hl-key">"channel_logo"</span>: <span class="hl-str">"https://example.com/channel.png"</span>,
+      <span class="hl-key">"referee"</span>: <span class="hl-str">"محمود البنا"</span>,
+      <span class="hl-key">"match_time"</span>: <span class="hl-str">"67'"</span>,
+      <span class="hl-key">"details_match_time"</span>: <span class="hl-str">"13:45"</span>,
+      <span class="hl-key">"match_date"</span>: <span class="hl-str">"2026-02-22"</span>
+    },
+    <span class="hl-key">"home_logo"</span>: <span class="hl-str">"https://example.com/logos/ahly.png"</span>,
+    <span class="hl-key">"away_logo"</span>: <span class="hl-str">"https://example.com/logos/zamalek.png"</span>,
+    <span class="hl-key">"lineup_home"</span>: <span class="hl-str">"{\"formation\":\"4-3-3\",\"starting\":[...],\"substitutes\":[...]}"</span>,
+    <span class="hl-key">"lineup_away"</span>: <span class="hl-str">"{\"formation\":\"4-4-2\",\"starting\":[...],\"substitutes\":[...]}"</span>,
+    <span class="hl-key">"events"</span>: [
+      {
+        <span class="hl-key">"event_minute"</span>: <span class="hl-str">"23"</span>,
+        <span class="hl-key">"event_type"</span>: <span class="hl-str">"Goal"</span>,
+        <span class="hl-key">"player_name"</span>: <span class="hl-str">"M. Salah"</span>,
+        <span class="hl-key">"player_name_ar"</span>: <span class="hl-str">"محمد صلاح"</span>,
+        <span class="hl-key">"player_name_en"</span>: <span class="hl-str">"Mohamed Salah"</span>
+      },
+      <span style="color:#64748b;">// ... more events</span>
+    ],
+    <span class="hl-key">"standings"</span>: [ <span style="color:#64748b;">// only if include_standings=true</span>
+      {
+        <span class="hl-key">"team_name"</span>: <span class="hl-str">"الأهلي"</span>,
+        <span class="hl-key">"played"</span>: <span class="hl-num">18</span>,
+        <span class="hl-key">"won"</span>: <span class="hl-num">14</span>,
+        <span class="hl-key">"drawn"</span>: <span class="hl-num">3</span>,
+        <span class="hl-key">"lost"</span>: <span class="hl-num">1</span>,
+        <span class="hl-key">"points"</span>: <span class="hl-num">45</span>
+      }
+    ]
+  }
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span>  = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$matchId</span> = <span class="hl-num">1024</span>;
+<span class="hl-key">$url</span>     = <span class="hl-str">"https://your-domain.com/api/get?action=match&amp;id={$matchId}&amp;include_standings=true"</span>;
+
+<span style="color:#64748b;">// Initialize cURL</span>
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [
+        <span class="hl-str">"X-API-Key: {$apiKey}"</span>,
+        <span class="hl-str">"Content-Type: application/json"</span>
+    ],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span class="hl-key">$httpCode</span> = <span style="color:#67e8f9;">curl_getinfo</span>(<span class="hl-key">$ch</span>, <span class="hl-num">CURLINFO_HTTP_CODE</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$httpCode</span> === <span class="hl-num">200</span>) {
+    <span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+    <span class="hl-key">$match</span> = <span class="hl-key">$data</span>[<span class="hl-str">'data'</span>];
+
+    <span style="color:#67e8f9;">echo</span> <span class="hl-key">$match</span>[<span class="hl-str">'home_team'</span>]
+       . <span class="hl-str">" {$match['home_score']} - {$match['away_score']} "</span>
+       . <span class="hl-key">$match</span>[<span class="hl-str">'away_team'</span>] . <span class="hl-str">"\n"</span>;
+
+    <span style="color:#64748b;">// Display events</span>
+    <span style="color:#f472b6;">if</span> (<span style="color:#67e8f9;">isset</span>(<span class="hl-key">$match</span>[<span class="hl-str">'events'</span>])) {
+        <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$match</span>[<span class="hl-str">'events'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$event</span>) {
+            <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  ⚽ {$event['event_minute']}' — {$event['player_name']}\n"</span>;
+        }
+    }
+} <span style="color:#f472b6;">else</span> {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"Error: HTTP {$httpCode}\n"</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="events">
+            <h2>أحداث المباراة (Match Events)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=match&id=1024 → events[]</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    يتم إرجاع الأحداث داخل استجابة المباراة كمصفوفة <code>events</code>، وتتضمن الأهداف، البطاقات،
+                    والتبديلات.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON Response —
+                        events[]</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>[
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"GOAL"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"21"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"home"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"ويليام ساليبا"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"غابرييل ماجاليس"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"هدف"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">0</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"OWN_GOAL"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"45+3"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"بييرو هينكابي"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"هدف في مرماه"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">1</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"56"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"home"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"لياندرو تروسارد"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"غابرييل مارتينيلي"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">2</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"CARD_YELLOW"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"59"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"كول بالمر"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"بطاقة صفراء"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">3</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"CARD_YELLOW"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"65"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"جوريل هاتو"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"بطاقة صفراء"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">4</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"GOAL"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"66"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"home"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"يوريان تمبر"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"ديكلان رايس"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"هدف"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">5</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"CARD_YELLOW"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"68"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"بيدرو نيتو"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"بطاقة صفراء"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">6</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"CARD_RED"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"70"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"بيدرو نيتو"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"بطاقة حمراء"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">7</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"CARD_YELLOW"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"75"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"home"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"غابرييل ماجاليس"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"بطاقة صفراء"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">8</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"76"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"home"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"ديكلان رايس"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"كريستيان نورغارد"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">9</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"76"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"home"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"فيكتور غيوكيرس"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"كاي هافيرتز"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">10</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"76"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"جوريل هاتو"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"مالو غوستو"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">11</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"76"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"أندري سانتوس"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"روميو لافيا"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">12</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"CARD_YELLOW"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"79"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"إنزو فرنانديز"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"بطاقة صفراء"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">13</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"85"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"إنزو فرنانديز"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"ليام ديلاب"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">14</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"86"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"كول بالمر"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"أليخاندرو جارناتشو"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">15</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"SUBSTITUTION"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"90"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"مامادو سار"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">"توسين أدارابيويو"</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"تبديل لاعب"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">16</span>
+  },
+  {
+    <span class="hl-key">"match_id"</span>: <span class="hl-str">"87"</span>,
+    <span class="hl-key">"event_type"</span>: <span class="hl-str">"GOAL_VAR_CANCELLED"</span>,
+    <span class="hl-key">"event_minute"</span>: <span class="hl-str">"90+5"</span>,
+    <span class="hl-key">"team_side"</span>: <span class="hl-str">"away"</span>,
+    <span class="hl-key">"player_name"</span>: <span class="hl-str">"ليام ديلاب"</span>,
+    <span class="hl-key">"player_name_secondary"</span>: <span class="hl-str">""</span>,
+    <span class="hl-key">"event_details"</span>: <span class="hl-str">"هدف ملغي"</span>,
+    <span class="hl-key">"event_order"</span>: <span class="hl-num">17</span>
+  }
+]</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span>  = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$matchId</span> = <span class="hl-num">1024</span>;
+<span class="hl-key">$url</span>     = <span class="hl-str">"https://your-domain.com/api/get?action=match&amp;id={$matchId}"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span>  = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+<span class="hl-key">$match</span> = <span class="hl-key">$data</span>[<span class="hl-str">'data'</span>];
+
+<span style="color:#f472b6;">if</span> (<span style="color:#67e8f9;">isset</span>(<span class="hl-key">$match</span>[<span class="hl-str">'events'</span>])) {
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$match</span>[<span class="hl-str">'events'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$event</span>) {
+        <span class="hl-key">$icon</span> = <span style="color:#f472b6;">match</span>(<span class="hl-key">$event</span>[<span class="hl-str">'event_type'</span>]) {
+            <span class="hl-str">'Goal'</span>         => <span class="hl-str">'⚽'</span>,
+            <span class="hl-str">'Yellow Card'</span>  => <span class="hl-str">'🟨'</span>,
+            <span class="hl-str">'Red Card'</span>     => <span class="hl-str">'🟥'</span>,
+            <span class="hl-str">'Substitution'</span> => <span class="hl-str">'🔄'</span>,
+            <span style="color:#f472b6;">default</span>        => <span class="hl-str">'📌'</span>,
+        };
+
+        <span class="hl-key">$player</span> = <span class="hl-key">$event</span>[<span class="hl-str">'player_name_ar'</span>] ?? <span class="hl-key">$event</span>[<span class="hl-str">'player_name'</span>];
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"{$icon} {$event['event_minute']}' — {$player}\n"</span>;
+    }
+} <span style="color:#f472b6;">else</span> {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"No events available for this match.\n"</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="lineups">
+            <h2>تشكيلات الفريق (Match Lineups)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=match&id=1024 → lineup_home / lineup_away
+            </div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    تتضمن التشكيلة الخطة، التشكيلة الأساسية، البدلاء، اللاعبين الغائبين، وبيانات المدرب مع الصور.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON — lineup_home
+                        (decoded)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"formation"</span>: <span class="hl-str">"4-2-3-1"</span>,
+  <span class="hl-key">"team_name_ar"</span>: <span class="hl-str">"إيفرتون"</span>,
+  <span class="hl-key">"team_name_en"</span>: <span class="hl-str">"Everton"</span>,
+  <span class="hl-key">"team_logo"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../medium/team.png"</span>,
+  <span class="hl-key">"coach"</span>: <span class="hl-str">"ديفيد مويس"</span>,
+  <span class="hl-key">"coach_ar"</span>: <span class="hl-str">"ديفيد مويس"</span>,
+  <span class="hl-key">"coach_en"</span>: <span class="hl-str">"David Moyes"</span>,
+  <span class="hl-key">"coach_image"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../medium/12345.png"</span>,
+  <span class="hl-key">"starting"</span>: [
+    {
+      <span class="hl-key">"name"</span>: <span class="hl-str">"جوردان بيكفورد"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"جوردان بيكفورد"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Jordan Pickford"</span>,
+      <span class="hl-key">"number"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"position"</span>: { <span class="hl-key">"x"</span>: <span class="hl-num">50</span>, <span class="hl-key">"y"</span>: <span class="hl-num">12</span> },
+      <span class="hl-key">"position_en"</span>: <span class="hl-bool">null</span>,
+      <span class="hl-key">"id"</span>: <span class="hl-str">"e8dina16u5kt5ho4u5igtmimt"</span>,
+      <span class="hl-key">"image"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../medium/e8dina...png"</span>,
+      <span class="hl-key">"is_captain"</span>: <span class="hl-bool">false</span>,
+      <span class="hl-key">"events"</span>: []
+    },
+    {
+      <span class="hl-key">"name"</span>: <span class="hl-str">"ناتان باترسون"</span>,
+      <span class="hl-key">"number"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"position"</span>: { <span class="hl-key">"x"</span>: <span class="hl-num">13</span>, <span class="hl-key">"y"</span>: <span class="hl-num">38</span> },
+      <span class="hl-key">"is_captain"</span>: <span class="hl-bool">false</span>,
+      <span style="color:#64748b;">// ...</span>
+    },
+    <span style="color:#64748b;">// ... 9 more starting players</span>
+  ],
+  <span class="hl-key">"substitutes"</span>: [
+    {
+      <span class="hl-key">"name"</span>: <span class="hl-str">"M. Sherif"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"محمد شريف"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Mohamed Sherif"</span>,
+      <span class="hl-key">"number"</span>: <span class="hl-num">9</span>,
+      <span class="hl-key">"image"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../medium/54321.png"</span>
+    },
+    <span style="color:#64748b;">// ... more substitutes</span>
+  ],
+  <span class="hl-key">"injuries"</span>: [
+    {
+      <span class="hl-key">"name"</span>: <span class="hl-str">"جاك جريليش"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"جاك جريليش"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Jack Grealish"</span>,
+      <span class="hl-key">"reason"</span>: <span class="hl-bool">null</span>,
+      <span class="hl-key">"image"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../medium/abc.png"</span>
+    }
+  ],
+  <span class="hl-key">"suspensions"</span>: [
+    {
+      <span class="hl-key">"name"</span>: <span class="hl-str">"جيك أوبراين"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"جيك أوبراين"</span>,
+      <span class="hl-key">"reason"</span>: <span class="hl-bool">null</span>,
+      <span class="hl-key">"image"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../medium/default.png"</span>
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span>  = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$matchId</span> = <span class="hl-num">1024</span>;
+<span class="hl-key">$url</span>     = <span class="hl-str">"https://your-domain.com/api/get?action=match&amp;id={$matchId}"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span>  = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+<span class="hl-key">$match</span> = <span class="hl-key">$data</span>[<span class="hl-str">'data'</span>];
+
+<span style="color:#64748b;">// Decode home lineup</span>
+<span class="hl-key">$homeLineup</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$match</span>[<span class="hl-str">'lineup_home'</span>], <span class="hl-bool">true</span>);
+
+<span style="color:#67e8f9;">echo</span> <span class="hl-str">"📋 Formation: {$homeLineup['formation']}\n"</span>;
+<span style="color:#67e8f9;">echo</span> <span class="hl-str">"🧑‍💼 Coach: {$homeLineup['coach']}\n\n"</span>;
+
+<span style="color:#64748b;">// Starting XI</span>
+<span style="color:#67e8f9;">echo</span> <span class="hl-str">"⭐ Starting XI:\n"</span>;
+<span style="color:#f472b6;">foreach</span> (<span class="hl-key">$homeLineup</span>[<span class="hl-str">'starting'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$player</span>) {
+    <span class="hl-key">$name</span> = <span class="hl-key">$player</span>[<span class="hl-str">'name_ar'</span>] ?? <span class="hl-key">$player</span>[<span class="hl-str">'name'</span>];
+    <span class="hl-key">$pos</span>  = <span class="hl-str">"x:{$player['position']['x']}, y:{$player['position']['y']}"</span>;
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  #{$player['number']} {$name} ({$pos})\n"</span>;
+}
+
+<span style="color:#64748b;">// Substitutes</span>
+<span style="color:#f472b6;">if</span> (!<span style="color:#67e8f9;">empty</span>(<span class="hl-key">$homeLineup</span>[<span class="hl-str">'substitutes'</span>])) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"\n🔄 Substitutes:\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$homeLineup</span>[<span class="hl-str">'substitutes'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$player</span>) {
+        <span class="hl-key">$name</span> = <span class="hl-key">$player</span>[<span class="hl-str">'name_ar'</span>] ?? <span class="hl-key">$player</span>[<span class="hl-str">'name'</span>];
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  #{$player['number']} {$name}\n"</span>;
+    }
+}
+
+<span style="color:#64748b;">// Injuries</span>
+<span style="color:#f472b6;">if</span> (!<span style="color:#67e8f9;">empty</span>(<span class="hl-key">$homeLineup</span>[<span class="hl-str">'injuries'</span>])) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"\n🏥 Injuries:\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$homeLineup</span>[<span class="hl-str">'injuries'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$player</span>) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  ❌ {$player['name']}\n"</span>;
+    }
+}
+
+<span style="color:#64748b;">// Suspensions</span>
+<span style="color:#f472b6;">if</span> (!<span style="color:#67e8f9;">empty</span>(<span class="hl-key">$homeLineup</span>[<span class="hl-str">'suspensions'</span>])) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"\n🟥 Suspensions:\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$homeLineup</span>[<span class="hl-str">'suspensions'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$player</span>) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  🚫 {$player['name']}\n"</span>;
+    }
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats">
+            <h2>إحصائيات المباراة (Match Stats)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=match&id=1024 → statistics_data</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    يتم تخزين الإحصائيات (الاستحواذ، التسديدات، الركنيات) كسلسلة JSON مشفرة في حقل
+                    <code>statistics_data</code>.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON —
+                        statistics_data (decoded)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>[
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"الاستحواذ"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"58%"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"42%"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"إجمالي التسديدات"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"16"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"8"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"التسديدات على المرمى"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"7"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"3"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"التسديدات خارج المرمى"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"6"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"3"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"تسديدات تم اعتراضها"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"3"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"2"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"الركلات الركنية"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"8"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"2"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"التسلل"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"3"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"1"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"التصديات"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"2"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"5"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"الأخطاء المرتكبة"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"11"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"14"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"البطاقات الصفراء"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"1"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"5"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"البطاقات الحمراء"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"0"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"1"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"فرص خطيرة"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"4"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"1"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"إجمالي التمريرات"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"542"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"398"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"دقة التمرير"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"86% (466/542)"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"79% (314/398)"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"تمريرات مفتاحية"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"12"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"6"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"كرات عرضية"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"22% (5/23)"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"18% (2/11)"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"كرات طويلة"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"52% (26/50)"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"41% (25/61)"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"المراوغات الناجحة"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"62% (8/13)"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"44% (4/9)"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"الالتحامات الناجحة"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"51"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"48"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"الالتحامات الهوائية"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"12"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"10"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"التدخلات (Tackles)"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"15"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"19"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"قطع الكرات (Interceptions)"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"9"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"12"</span>
+  },
+  {
+    <span class="hl-key">"type"</span>: <span class="hl-str">"تشتيت الكرة (Clearances)"</span>,
+    <span class="hl-key">"home"</span>: <span class="hl-str">"14"</span>,
+    <span class="hl-key">"away"</span>: <span class="hl-str">"22"</span>
+  }
+]</pre>
+                </div>
+            </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span>  = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$matchId</span> = <span class="hl-num">1024</span>;
+<span class="hl-key">$url</span>     = <span class="hl-str">"https://your-domain.com/api/get?action=match&amp;id={$matchId}"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span>  = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+<span class="hl-key">$match</span> = <span class="hl-key">$data</span>[<span class="hl-str">'data'</span>];
+
+<span style="color:#64748b;">// Decode statistics</span>
+<span class="hl-key">$stats</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$match</span>[<span class="hl-str">'statistics_data'</span>], <span class="hl-bool">true</span>);
+
+<span style="color:#64748b;">// Categories: summary, attacking, passing, defence, discipline</span>
+<span class="hl-key">$categories</span> = [
+    <span class="hl-str">'summary'</span>    => <span class="hl-str">'📊 Summary'</span>,
+    <span class="hl-str">'attacking'</span>  => <span class="hl-str">'⚽ Attacking'</span>,
+    <span class="hl-str">'passing'</span>    => <span class="hl-str">'🎯 Passing'</span>,
+    <span class="hl-str">'defence'</span>    => <span class="hl-str">'🛡️ Defence'</span>,
+    <span class="hl-str">'discipline'</span> => <span class="hl-str">'🟨 Discipline'</span>,
+];
+
+<span style="color:#f472b6;">foreach</span> (<span class="hl-key">$categories</span> <span style="color:#f472b6;">as</span> <span class="hl-key">$key</span> => <span class="hl-key">$title</span>) {
+    <span style="color:#f472b6;">if</span> (!<span style="color:#67e8f9;">empty</span>(<span class="hl-key">$stats</span>[<span class="hl-key">$key</span>])) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"\n{$title}\n"</span>;
+        <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$stats</span>[<span class="hl-key">$key</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$stat</span>) {
+            <span style="color:#67e8f9;">echo</span> <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$stat</span>[<span class="hl-str">'type'</span>], <span class="hl-num">22</span>)
+               . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$stat</span>[<span class="hl-str">'teamA'</span>], <span class="hl-num">8</span>)
+               . <span class="hl-key">$stat</span>[<span class="hl-str">'teamB'</span>] . <span class="hl-str">"\n"</span>;
+        }
+    }
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="h2h">
+            <h2>المواجهات السابقة (Previous Meetings)</h2>
+            <p>تاريخ المواجهات المباشرة والنتائج السابقة بين الفريقين.</p>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=match&id=1024 → previous_meetings</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    يتم إرجاع المواجهات السابقة داخل استجابة تفاصيل المباراة كمصفوفة <code>previous_meetings</code>، مما
+                    يسهل عرض التاريخ المباشر دون طلبات إضافية.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON —
+                        previous_meetings</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"h2h"</span>: {
+    <span class="hl-key">"matches"</span>: [
+      { <span class="hl-key">"date"</span>: <span class="hl-str">"2025-11-22"</span>, <span class="hl-key">"home_team"</span>: <span class="hl-str">"نابولي"</span>, <span class="hl-key">"away_team"</span>: <span class="hl-str">"أتلانتا"</span>, <span class="hl-key">"score_home"</span>: <span class="hl-num">3</span>, <span class="hl-key">"score_away"</span>: <span class="hl-num">1</span>, <span class="hl-key">"status"</span>: <span class="hl-str">"Finished"</span> },
+      <span style="color:#64748b;">// ... 4 more matches</span>
+    ],
+    <span class="hl-key">"stats"</span>: { <span class="hl-key">"teamAWins"</span>: <span class="hl-num">1</span>, <span class="hl-key">"teamBWins"</span>: <span class="hl-num">4</span>, <span class="hl-key">"draws"</span>: <span class="hl-num">0</span>, <span class="hl-key">"teamAGoals"</span>: <span class="hl-num">6</span>, <span class="hl-key">"teamBGoals"</span>: <span class="hl-num">12</span> }
+  },
+  <span class="hl-key">"teamA"</span>: {
+    <span class="hl-key">"results"</span>: [
+      { <span class="hl-key">"home_team"</span>: <span class="hl-str">"دورتموند"</span>, <span class="hl-key">"away_team"</span>: <span class="hl-str">"أتلانتا"</span>, <span class="hl-key">"score_home"</span>: <span class="hl-num">2</span>, <span class="hl-key">"score_away"</span>: <span class="hl-num">0</span>, <span class="hl-key">"result"</span>: <span class="hl-str">"LOSE"</span> }
+    ],
+    <span class="hl-key">"stats"</span>: { <span class="hl-key">"wins"</span>: <span class="hl-num">3</span>, <span class="hl-key">"draws"</span>: <span class="hl-num">1</span>, <span class="hl-key">"losses"</span>: <span class="hl-num">1</span> }
+  },
+  <span class="hl-key">"teamB"</span>: {
+    <span class="hl-key">"results"</span>: [
+      { <span class="hl-key">"home_team"</span>: <span class="hl-str">"نابولي"</span>, <span class="hl-key">"away_team"</span>: <span class="hl-str">"روما"</span>, <span class="hl-key">"score_home"</span>: <span class="hl-num">2</span>, <span class="hl-key">"score_away"</span>: <span class="hl-num">2</span>, <span class="hl-key">"result"</span>: <span class="hl-str">"DRAW"</span> }
+    ],
+    <span class="hl-key">"stats"</span>: { <span class="hl-key">"wins"</span>: <span class="hl-num">2</span>, <span class="hl-key">"draws"</span>: <span class="hl-num">2</span>, <span class="hl-key">"losses"</span>: <span class="hl-num">1</span> }
+  }
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span>  = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$matchId</span> = <span class="hl-num">1024</span>;
+<span class="hl-key">$url</span>     = <span class="hl-str">"https://your-domain.com/api/get?action=match&amp;id={$matchId}"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span>  = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+<span class="hl-key">$h2hData</span> = <span class="hl-key">$data</span>[<span class="hl-str">'data'</span>][<span class="hl-str">'previous_meetings'</span>];
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$h2hData</span>) {
+    <span style="color:#64748b;">// 1. Head to Head Matches</span>
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"🤝 H2H Matches:\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$h2hData</span>[<span class="hl-str">'h2h'</span>][<span class="hl-str">'matches'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$m</span>) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  {$m['date']}: {$m['home_team']} {$m['score_home']} - {$m['score_away']} {$m['away_team']}\n"</span>;
+    }
+
+    <span style="color:#64748b;">// 2. Team A (Home) Last Results</span>
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"\n🏠 Team A Last Results:\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$h2hData</span>[<span class="hl-str">'teamA'</span>][<span class="hl-str">'results'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$r</span>) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  {$r['result']}: {$r['home_team']} {$r['score_home']} - {$r['score_away']} {$r['away_team']}\n"</span>;
+    }
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        </section>
+
+        <section id="standings">
+            <h2>جدول الترتيب (Standings)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=standings&match_id=1024</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    يعيد جدول الدوري للفريقين المتنافسين في المباراة المحددة، مما يسمح بعرض ترتيبهم الحالي في جدول
+                    الدوري.
+                </div>
+            </div>
+
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON — لكل مباراة</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON —
+                        action=standings</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"match_id"</span>: <span class="hl-str">"1024"</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"rank"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"team"</span>: <span class="hl-str">"ليفربول"</span>,
+      <span class="hl-key">"team_name"</span>: <span class="hl-str">"ليفربول"</span>,
+      <span class="hl-key">"played"</span>: <span class="hl-num">26</span>,
+      <span class="hl-key">"won"</span>: <span class="hl-num">20</span>,
+      <span class="hl-key">"drawn"</span>: <span class="hl-num">4</span>,
+      <span class="hl-key">"lost"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"goals_for"</span>: <span class="hl-num">60</span>,
+      <span class="hl-key">"goals_against"</span>: <span class="hl-num">22</span>,
+      <span class="hl-key">"goal_diff"</span>: <span class="hl-num">38</span>,
+      <span class="hl-key">"points"</span>: <span class="hl-num">64</span>
+    },
+    {
+      <span class="hl-key">"rank"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"team"</span>: <span class="hl-str">"أرسنال"</span>,
+      <span class="hl-key">"played"</span>: <span class="hl-num">26</span>,
+      <span class="hl-key">"won"</span>: <span class="hl-num">17</span>,
+      <span class="hl-key">"drawn"</span>: <span class="hl-num">6</span>,
+      <span class="hl-key">"lost"</span>: <span class="hl-num">3</span>,
+      <span class="hl-key">"goals_for"</span>: <span class="hl-num">52</span>,
+      <span class="hl-key">"goals_against"</span>: <span class="hl-num">24</span>,
+      <span class="hl-key">"goal_diff"</span>: <span class="hl-num">28</span>,
+      <span class="hl-key">"points"</span>: <span class="hl-num">57</span>
+    },
+    <span style="color:#64748b;">// ... more teams</span>
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON — جميع الدوريات</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON —
+                        action=leagues_standings</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">2</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"league_name"</span>: <span class="hl-str">"الدوري الإنجليزي الممتاز"</span>,
+      <span class="hl-key">"league_name_ar"</span>: <span class="hl-str">"الدوري الإنجليزي الممتاز"</span>,
+      <span class="hl-key">"league_name_en"</span>: <span class="hl-str">"Premier League"</span>,
+      <span class="hl-key">"league_logo"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../premier-league.png"</span>,
+      <span class="hl-key">"standings_updated_at"</span>: <span class="hl-str">"2026-02-22 08:00:00"</span>,
+      <span class="hl-key">"standings"</span>: [
+        { <span class="hl-key">"rank"</span>: <span class="hl-num">1</span>, <span class="hl-key">"team"</span>: <span class="hl-str">"ليفربول"</span>, <span class="hl-key">"played"</span>: <span class="hl-num">26</span>, <span class="hl-key">"points"</span>: <span class="hl-num">64</span>, <span style="color:#64748b;">...</span> },
+        { <span class="hl-key">"rank"</span>: <span class="hl-num">2</span>, <span class="hl-key">"team"</span>: <span class="hl-str">"أرسنال"</span>, <span class="hl-key">"played"</span>: <span class="hl-num">26</span>, <span class="hl-key">"points"</span>: <span class="hl-num">57</span>, <span style="color:#64748b;">...</span> },
+        <span style="color:#64748b;">// ... 18 more teams</span>
+      ]
+    },
+    <span style="color:#64748b;">// ... more leagues</span>
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$url</span> = <span class="hl-str">"https://your-domain.com/api/get?action=leagues_standings"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: YOUR_API_KEY"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$league</span>) {
+    <span class="hl-key">$name</span> = <span class="hl-key">$league</span>[<span class="hl-str">'league_name_en'</span>] ?? <span class="hl-key">$league</span>[<span class="hl-str">'league_name'</span>];
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"🏆 {$name}\n"</span>;
+    <span style="color:#67e8f9;">echo</span> <span style="color:#67e8f9;">str_pad</span>(<span class="hl-str">"#"</span>, <span class="hl-num">4</span>) . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-str">"Team"</span>, <span class="hl-num">20</span>)
+       . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-str">"P"</span>, <span class="hl-num">5</span>) . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-str">"W"</span>, <span class="hl-num">5</span>)
+       . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-str">"D"</span>, <span class="hl-num">5</span>) . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-str">"L"</span>, <span class="hl-num">5</span>)
+       . <span class="hl-str">"Pts\n"</span>;
+
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$league</span>[<span class="hl-str">'standings'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$row</span>) {
+        <span class="hl-key">$team</span> = <span class="hl-key">$row</span>[<span class="hl-str">'team_name'</span>] ?? <span class="hl-key">$row</span>[<span class="hl-str">'team'</span>];
+        <span style="color:#67e8f9;">echo</span> <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$row</span>[<span class="hl-str">'rank'</span>], <span class="hl-num">4</span>)
+           . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-team">team</span>, <span class="hl-num">20</span>)
+           . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$row</span>[<span class="hl-str">'played'</span>], <span class="hl-num">5</span>)
+           . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$row</span>[<span class="hl-str">'won'</span>], <span class="hl-num">5</span>)
+           . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$row</span>[<span class="hl-str">'drawn'</span>], <span class="hl-num">5</span>)
+           . <span style="color:#67e8f9;">str_pad</span>(<span class="hl-key">$row</span>[<span class="hl-str">'lost'</span>], <span class="hl-num">5</span>)
+           . <span class="hl-key">$row</span>[<span class="hl-str">'points'</span>] . <span class="hl-str">"\n"</span>;
+    }
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"\n"</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="leagues_standings">
+            <h2>قائمة الترتيب العام (Leagues Standings List)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=leagues_standings</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    تعيد هذه النقطة مجموعة من جداول الترتيب للدوريات التي تتوفر لها بيانات كاملة.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON — Leagues
+                        Standings List</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">2</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"league_name"</span>: <span class="hl-str">"الدوري الإنجليزي الممتاز"</span>,
+      <span class="hl-key">"league_logo"</span>: <span class="hl-str">"https://example.com/epl.png"</span>,
+      <span class="hl-key">"standings"</span>: [
+        { <span class="hl-key">"rank"</span>: <span class="hl-num">1</span>, <span class="hl-key">"team"</span>: <span class="hl-str">"ليفربول"</span>, <span class="hl-key">"points"</span>: <span class="hl-num">64</span> },
+        { <span class="hl-key">"rank"</span>: <span class="hl-num">2</span>, <span class="hl-key">"team"</span>: <span class="hl-str">"أرسنال"</span>, <span class="hl-key">"points"</span>: <span class="hl-num">62</span> }
+        <span style="color:#64748b;">// ...</span>
+      ]
+    },
+    {
+      <span class="hl-key">"league_name"</span>: <span class="hl-str">"الدوري الإسباني"</span>,
+      <span class="hl-key">"league_logo"</span>: <span class="hl-str">"https://example.com/laliga.png"</span>,
+      <span class="hl-key">"standings"</span>: [
+        { <span class="hl-key">"rank"</span>: <span class="hl-num">1</span>, <span class="hl-key">"team"</span>: <span class="hl-str">"ريال مدريد"</span>, <span class="hl-key">"points"</span>: <span class="hl-num">70</span> }
+        <span style="color:#64748b;">// ...</span>
+      ]
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$url</span> = <span class="hl-str">"https://your-domain.com/api/get?action=leagues_standings"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: YOUR_API_KEY"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$league</span>) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"🏆 {$league['league_name']}\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$league</span>[<span class="hl-str">'standings'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$pos</span>) {
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  {$pos['rank']}. {$pos['team']} ({$pos['points']} pts)\n"</span>;
+    }
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"-------------------\n"</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="live">
+            <h2>البث المباشر (Live Broadcast)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=live_stream&id=1024</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    يوصى باستخدام حقل <code>live_iframe</code> لعرض البث المباشر بشكل متكامل داخل تطبيقك، حيث يوفر تجربة
+                    مشاهدة أفضل وتوافقية أعلى.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON — حقل المباراة</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON — match →
+                        live_url</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"data"</span>: {
+    <span class="hl-key">"id"</span>: <span class="hl-num">1024</span>,
+    <span class="hl-key">"home_team"</span>: <span class="hl-str">"الأهلي"</span>,
+    <span class="hl-key">"away_team"</span>: <span class="hl-str">"الزمالك"</span>,
+    <span style="color:#64748b;">// ... other match data ...</span>
+    <span class="hl-key">"live_iframe"</span>: <span class="hl-str">"&lt;iframe src='https://player.example.com/embed/xyz' ...&gt;&lt;/iframe&gt;"</span>
+  }
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON — نقطة وصول البث المباشر</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON —
+                        ?action=live_stream</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#64748b;">// ✅ Success Response</span>
+{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"iframe"</span>: <span class="hl-str">"&lt;iframe src='https://player.example.com/embed/xyz' width='100%' height='500' allowfullscreen&gt;&lt;/iframe&gt;"</span>,
+  <span class="hl-key">"source"</span>: <span class="hl-str">"server-proxy"</span>
+}
+
+<span style="color:#64748b;">// ❌ Error Response</span>
+{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"error"</span>,
+  <span class="hl-key">"message"</span>: <span class="hl-str">"Live stream not found"</span>
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$matchId</span> = <span class="hl-num">1024</span>;
+<span class="hl-key">$url</span>     = <span class="hl-str">"https://your-domain.com/api/get?action=live_stream&id={$matchId}"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: YOUR_API_KEY"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$data</span>[<span class="hl-str">'status'</span>] === <span class="hl-str">'success'</span>) {
+    <span style="color:#64748b;">// Embed the iframe directly in your HTML</span>
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"&lt;div class='live-player'&gt;"</span>;
+    <span style="color:#67e8f9;">echo</span> <span class="hl-key">$data</span>[<span class="hl-str">'iframe'</span>];
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"&lt;/div&gt;"</span>;
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"Source: {$data['source']}\n"</span>;
+} <span style="color:#f472b6;">else</span> {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"❌ {$data['message']}\n"</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="leagues">
+            <h2>قائمة الدوريات (Leagues List)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=leagues</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    جميع الدوريات المدعومة والنشطة، وتتضمن البيانات الأساسية والروابط.
+                </div>
+            </div>
+
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">3</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"الدوري الإنجليزي الممتاز"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"الدوري الإنجليزي الممتاز"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Premier League"</span>,
+      <span class="hl-key">"logo_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../premier-league.png"</span>,
+      <span class="hl-key">"country"</span>: <span class="hl-str">"England"</span>,
+      <span class="hl-key">"is_active"</span>: <span class="hl-num">1</span>
+    },
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"الدوري الإسباني"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"الدوري الإسباني"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"La Liga"</span>,
+      <span class="hl-key">"logo_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../la-liga.png"</span>,
+      <span class="hl-key">"country"</span>: <span class="hl-str">"Spain"</span>,
+      <span class="hl-key">"is_active"</span>: <span class="hl-num">1</span>
+    },
+    <span style="color:#64748b;">// ... more leagues</span>
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$url</span> = <span class="hl-str">"https://your-domain.com/api/get?action=leagues"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: YOUR_API_KEY"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#67e8f9;">echo</span> <span class="hl-str">"🏆 Leagues ({$data['count']}):\n\n"</span>;
+
+<span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$league</span>) {
+    <span class="hl-key">$name</span>    = <span class="hl-key">$league</span>[<span class="hl-str">'name_en'</span>] ?? <span class="hl-key">$league</span>[<span class="hl-str">'name'</span>];
+    <span class="hl-key">$country</span> = <span class="hl-key">$league</span>[<span class="hl-str">'country'</span>] ?? <span class="hl-str">'N/A'</span>;
+    <span class="hl-key">$status</span>  = <span class="hl-key">$league</span>[<span class="hl-str">'is_active'</span>] ? <span class="hl-str">'✅'</span> : <span class="hl-str">'❌'</span>;
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"  {$status} {$name} ({$country})\n"</span>;
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+
+
+        <h2>قائمة الفرق (Teams List)</h2>
+        <div class="endpoint-row"><span class="method">GET</span> ?action=teams</div>
+        <div class="callout">
+            <div class="callout-header">
+                <i class="fas fa-comment-alt"></i> Tip
+            </div>
+            <div class="callout-content">
+                قائمة شاملة بجميع الفرق الرياضية المتاحة في النظام مع شعاراتها.
+            </div>
+        </div>
+
+
+        <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+        <div class="preview-window">
+            <div class="preview-header">
+                <div class="window-dots">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                    Response</span>
+                <button class="copy-btn">Copy</button>
+            </div>
+            <div class="preview-body">
+                <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">2</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"الأهلي"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"الأهلي"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Al Ahly"</span>,
+      <span class="hl-key">"logo_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../al-ahly.png"</span>
+    },
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"الزمالك"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"الزمالك"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Zamalek"</span>,
+      <span class="hl-key">"logo_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../zamalek.png"</span>
+    }
+  ]
+}</pre>
+            </div>
+        </div>
+
+        <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+        <div class="preview-window">
+            <div class="preview-header">
+                <div class="window-dots">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                <button class="copy-btn">Copy</button>
+            </div>
+            <div class="preview-body">
+                <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span> = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$url</span>    = <span class="hl-str">"https://your-domain.com/api/get?action=teams"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$data</span>[<span class="hl-str">'status'</span>] === <span class="hl-str">'success'</span>) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"Found "</span> . <span class="hl-key">$data</span>[<span class="hl-str">'count'</span>] . <span class="hl-str">" teams:\n\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$team</span>) {
+        <span class="hl-key">$name</span> = <span class="hl-key">$team</span>[<span class="hl-str">'name_en'</span>] ?: <span class="hl-key">$team</span>[<span class="hl-str">'name'</span>];
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"- "</span> . <span class="hl-key">$name</span> . <span class="hl-str">" (ID: "</span> . <span class="hl-key">$team</span>[<span class="hl-str">'id'</span>] . <span class="hl-str">")\n"</span>;
+    }
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+            </div>
+        </div>
+        </section>
+
+        <section id="countries">
+            <h2>قائمة الدول (Countries List)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=countries</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    قائمة الدول المتاحة والنشطة فقط والتي تتوفر لها دوريات أو فرق مدعومة.
+                </div>
+            </div>
+
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">2</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"Egypt"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"مصر"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Egypt"</span>,
+      <span class="hl-key">"logo_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../egypt.png"</span>,
+      <span class="hl-key">"is_active"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"activated_at"</span>: <span class="hl-str">"2026-02-21 10:00:00"</span>
+    },
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">2</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"Spain"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"إسبانيا"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Spain"</span>,
+      <span class="hl-key">"logo_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../spain.png"</span>,
+      <span class="hl-key">"is_active"</span>: <span class="hl-num">1</span>,
+      <span class="hl-key">"activated_at"</span>: <span class="hl-str">"2026-02-21 10:05:00"</span>
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span> = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$url</span>    = <span class="hl-str">"https://your-domain.com/api/get?action=countries"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$data</span>[<span class="hl-str">'status'</span>] === <span class="hl-str">'success'</span>) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"🌍 Available Countries ("</span> . <span class="hl-key">$data</span>[<span class="hl-str">'count'</span>] . <span class="hl-str">"):\n\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$country</span>) {
+        <span class="hl-key">$name</span>   = <span class="hl-key">$country</span>[<span class="hl-str">'name_ar'</span>] ?: <span class="hl-key">$country</span>[<span class="hl-str">'name'</span>];
+        <span class="hl-key">$status</span> = <span class="hl-key">$country</span>[<span class="hl-str">'is_active'</span>] ? <span class="hl-str">"✅"</span> : <span class="hl-str">"❌"</span>;
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"{$status} "</span> . <span class="hl-key">$name</span> . <span class="hl-str">" (Code: "</span> . <span class="hl-key">$country</span>[<span class="hl-str">'id'</span>] . <span class="hl-str">")\n"</span>;
+    }
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="players">
+            <h2>البحث عن اللاعبين (Players Search)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=players&search=Messi</div>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=players&team_id=102</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    ابحث عن اللاعبين بالاسم أو قم بتصفيرة النتائج حسب معرف الفريق (Team ID).
+                </div>
+            </div>
+
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المعامل (Parameter)</th>
+                            <th>النوع (Type)</th>
+                            <th>مطلوب (Required)</th>
+                            <th>الوصف (Description)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>team_id</code></td>
+                            <td>Int</td>
+                            <td>لا</td>
+                            <td>تصفية اللاعبين حسب معرف الفريق</td>
+                        </tr>
+                        <tr>
+                            <td><code>search</code></td>
+                            <td>String</td>
+                            <td>لا</td>
+                            <td>البحث عن لاعب بالاسم (يدعم العربية/الإنجليزية)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">1</span>,
+  <span class="hl-key">"total"</span>: <span class="hl-num">1</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">501</span>,
+      <span class="hl-key">"name"</span>: <span class="hl-str">"Lionel Messi"</span>,
+      <span class="hl-key">"name_ar"</span>: <span class="hl-str">"ليونيل ميسي"</span>,
+      <span class="hl-key">"name_en"</span>: <span class="hl-str">"Lionel Messi"</span>,
+      <span class="hl-key">"position"</span>: <span class="hl-str">"Forward"</span>,
+      <span class="hl-key">"number"</span>: <span class="hl-str">"10"</span>,
+      <span class="hl-key">"image_url"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../messi.png"</span>,
+      <span class="hl-key">"team_id"</span>: <span class="hl-num">102</span>,
+      <span class="hl-key">"team_name"</span>: <span class="hl-str">"Inter Miami"</span>,
+      <span class="hl-key">"team_logo"</span>: <span class="hl-str">"https://cdn.sportfeeds.io/.../inter-miami.png"</span>
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span> = <span class="hl-str">"YOUR_API_KEY"</span>;
+<span class="hl-key">$query</span>  = <span style="color:#67e8f9;">urlencode</span>(<span class="hl-str">"Messi"</span>);
+<span class="hl-key">$url</span>    = <span class="hl-str">"https://your-domain.com/api/get?action=players&amp;search={$query}"</span>;
+
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$url</span>);
+<span style="color:#67e8f9;">curl_setopt_array</span>(<span class="hl-key">$ch</span>, [
+    <span class="hl-num">CURLOPT_RETURNTRANSFER</span> => <span class="hl-bool">true</span>,
+    <span class="hl-num">CURLOPT_HTTPHEADER</span>     => [<span class="hl-str">"X-API-Key: {$apiKey}"</span>],
+]);
+
+<span class="hl-key">$response</span> = <span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span class="hl-key">$data</span> = <span style="color:#67e8f9;">json_decode</span>(<span class="hl-key">$response</span>, <span class="hl-bool">true</span>);
+
+<span style="color:#f472b6;">if</span> (<span class="hl-key">$data</span>[<span class="hl-str">'status'</span>] === <span class="hl-str">'success'</span>) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"Found "</span> . <span class="hl-key">$data</span>[<span class="hl-str">'count'</span>] . <span class="hl-str">" matching players:\n\n"</span>;
+    <span style="color:#f472b6;">foreach</span> (<span class="hl-key">$data</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$player</span>) {
+        <span class="hl-key">$name</span> = <span class="hl-key">$player</span>[<span class="hl-str">'name_ar'</span>] ?: <span class="hl-key">$player</span>[<span class="hl-str">'name'</span>];
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"🏃 "</span> . <span class="hl-key">$name</span> . <span class="hl-str">" (#{</span><span class="hl-key">$player</span>[<span class="hl-str">'number'</span>]<span class="hl-str">} | {</span><span class="hl-key">$player</span>[<span class="hl-str">'position'</span>]<span class="hl-str">})\n"</span>;
+        <span style="color:#67e8f9;">echo</span> <span class="hl-str">"🏟️ Team: {</span><span class="hl-key">$player</span>[<span class="hl-str">'team_name'</span>]<span class="hl-str">}\n\n"</span>;
+    }
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="news">
+            <h2>الأخبار (News)</h2>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=news&limit=10</div>
+            <div class="endpoint-row"><span class="method">GET</span> ?action=news_details&id=123</div>
+            <div class="callout">
+                <div class="callout-header">
+                    <i class="fas fa-comment-alt"></i> Tip
+                </div>
+                <div class="callout-content">
+                    جلب آخر الأخبار الرياضية مع تفاصيل كاملة ودعم الصور والفيديوهات والترجمة.
+                </div>
+            </div>
+
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON — قائمة الأخبار</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"count"</span>: <span class="hl-num">1</span>,
+  <span class="hl-key">"data"</span>: [
+    {
+      <span class="hl-key">"id"</span>: <span class="hl-num">123</span>,
+      <span class="hl-key">"title"</span>: <span class="hl-str">"مانشستر سيتي يواجه ريال مدريد في قمة مرتقبة"</span>,
+      <span class="hl-key">"title_en"</span>: <span class="hl-str">"Manchester City faces Real Madrid in anticipated clash"</span>,
+      <span class="hl-key">"image"</span>: <span class="hl-str">"https://example.com/news/city-madrid.jpg"</span>,
+      <span class="hl-key">"date"</span>: <span class="hl-str">"2026-02-22 10:00:00"</span>
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-code"></i> مثال لاستجابة JSON — تفاصيل الخبر</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">JSON
+                        Response</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre>{
+  <span class="hl-key">"status"</span>: <span class="hl-str">"success"</span>,
+  <span class="hl-key">"data"</span>: {
+    <span class="hl-key">"id"</span>: <span class="hl-num">123</span>,
+    <span class="hl-key">"title"</span>: <span class="hl-str">"..."</span>,
+    <span class="hl-key">"body"</span>: <span class="hl-str">"&lt;p&gt;تفاصيل الخبر بالكامل هنا...&lt;/p&gt;"</span>,
+    <span class="hl-key">"body_en"</span>: <span class="hl-str">"&lt;p&gt;Full article content in English...&lt;/p&gt;"</span>,
+    <span style="color:#64748b;">// ... other fields</span>
+  }
+}</pre>
+                </div>
+            </div>
+
+            <h3><i class="fab fa-php"></i> مثال لطلب PHP</h3>
+            <div class="preview-window">
+                <div class="preview-header">
+                    <div class="window-dots">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <span style="color:#94a3b8;font-size:0.75rem;font-family:'Fira Code',monospace;">PHP (cURL)</span>
+                    <button class="copy-btn">Copy</button>
+                </div>
+                <div class="preview-body">
+                    <pre><span style="color:#c084fc;">&lt;?php</span>
+
+<span class="hl-key">$apiKey</span> = <span class="hl-str">"YOUR_API_KEY"</span>;
+
+<span style="color:#64748b;">// 1. Fetch Latest News</span>
+<span class="hl-key">$listUrl</span> = <span class="hl-str">"https://your-domain.com/api/get?action=news&amp;limit=5"</span>;
+<span class="hl-key">$ch</span> = <span style="color:#67e8f9;">curl_init</span>(<span class="hl-key">$listUrl</span>);
+<span style="color:#67e8f9;">curl_setopt</span>(<span class="hl-key">$ch</span>, <span class="hl-num">CURLOPT_RETURNTRANSFER</span>, <span class="hl-bool">true</span>);
+<span style="color:#67e8f9;">curl_setopt</span>(<span class="hl-key">$ch</span>, <span class="hl-num">CURLOPT_HTTPHEADER</span>, [<span class="hl-str">"X-API-Key: {$apiKey}"</span>]);
+<span class="hl-key">$newsList</span> = <span style="color:#67e8f9;">json_decode</span>(<span style="color:#67e8f9;">curl_exec</span>(<span class="hl-key">$ch</span>), <span class="hl-bool">true</span>);
+<span style="color:#67e8f9;">curl_close</span>(<span class="hl-key">$ch</span>);
+
+<span style="color:#f472b6;">foreach</span> (<span class="hl-key">$newsList</span>[<span class="hl-str">'data'</span>] <span style="color:#f472b6;">as</span> <span class="hl-key">$item</span>) {
+    <span style="color:#67e8f9;">echo</span> <span class="hl-str">"📰 "</span> . <span class="hl-key">$item</span>[<span class="hl-str">'title'</span>] . <span class="hl-str">" (ID: "</span> . <span class="hl-key">$item</span>[<span class="hl-str">'id'</span>] . <span class="hl-str">")\n"</span>;
+    
+    <span style="color:#64748b;">// 2. Fetch specific details if needed</span>
+    <span style="color:#64748b;">// $detailUrl = "https://your-domain.com/api/get?action=news_details&id=" . $item['id'];</span>
+}
+
+<span style="color:#c084fc;">?&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Sidebar & TOC active state highlight (ScrollSpy)
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+        const tocList = document.getElementById('tocList');
+        const sections = document.querySelectorAll('main section');
+        const tocItems = [];
+
+        // 1. Generate TOC dynamically
+        sections.forEach(section => {
+            const h2 = section.querySelector('h2');
+            const id = section.getAttribute('id');
+            if (h2) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${id}`;
+                a.textContent = h2.textContent;
+                li.appendChild(a);
+                tocList.appendChild(li);
+                tocItems.push({ id, el: a });
+            }
+        });
+
+        // 2. IntersectionObserver for ScrollSpy
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10% 0px -80% 0px', // Trigger when section is near top
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+
+                    // Update Main Sidebar
+                    sidebarLinks.forEach(link => {
+                        const href = link.getAttribute('href').substring(1);
+                        link.classList.toggle('active', href === id);
+                    });
+
+                    // Update TOC
+                    const activeTocItem = tocItems.find(item => item.id === id);
+                    if (activeTocItem) {
+                        tocItems.forEach(item => item.el.classList.remove('active'));
+                        activeTocItem.el.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        // Click handlers for manual override (optional but improves UX)
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Modern Code Block Enhancements
+        document.querySelectorAll('.preview-window').forEach(window => {
+            const header = window.querySelector('.preview-header');
+            if (header) {
+                header.innerHTML = `
+                    <button class="copy-btn" title="Copy Content"><i class="far fa-copy"></i></button>
+                `;
+            }
+
+            const pre = window.querySelector('.preview-body pre');
+            if (pre) {
+                const content = pre.innerHTML.trim();
+                const lines = content.split('\n');
+                pre.innerHTML = lines.map(line => `<span class="line">${line}</span>`).join('\n');
+            }
+        });
+
+        function fallbackCopyText(text) {
+            if (typeof document.execCommand !== 'function') {
+                return false;
+            }
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            textarea.style.pointerEvents = 'none';
+
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+
+            try {
+                return document.execCommand('copy');
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function showManualCopyPrompt(text) {
+            window.prompt('Copy manually: Ctrl+C, Enter', text);
+        }
+
+        function writeTextToClipboard(text) {
+            const clipboardApi = typeof navigator !== 'undefined' ? navigator.clipboard : null;
+            const canUseClipboardApi = clipboardApi && typeof clipboardApi.writeText === 'function';
+
+            if (canUseClipboardApi && window.isSecureContext) {
+                return clipboardApi.writeText(text);
+            }
+
+            return new Promise((resolve, reject) => {
+                try {
+                    if (fallbackCopyText(text)) {
+                        resolve();
+                    } else {
+                        reject(new Error('Copy command was rejected'));
+                    }
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
+        // Copy Logic
+        document.addEventListener('click', (e) => {
+            const copyBtn = e.target.closest('.copy-btn');
+            if (copyBtn) {
+                const pre = copyBtn.closest('.preview-window').querySelector('pre');
+                const textToCopy = Array.from(pre.querySelectorAll('.line'))
+                    .map(line => line.innerText)
+                    .join('\n');
+
+                writeTextToClipboard(textToCopy).then(() => {
+                    const icon = copyBtn.querySelector('i');
+                    icon.className = 'fas fa-check';
+                    copyBtn.style.color = '#10b981';
+                    setTimeout(() => {
+                        icon.className = 'far fa-copy';
+                        copyBtn.style.color = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showManualCopyPrompt(textToCopy);
+                });
+            }
+        });
+
+        // Upgraded Download Logic (DOM-based Cleaning)
+        function getCleanedContent(format) {
+            const mainContent = document.querySelector('.main-content').cloneNode(true);
+
+            // 1. Remove UI internal elements from the clone
+            mainContent.querySelectorAll('.copy-btn, .expand-btn, h3 i, .window-dots').forEach(el => el.remove());
+
+            let output = format === 'md' ? "# Haya Cloud APIs API Documentation\n\n" : "Haya Cloud APIs API Documentation\n==========================\n\n";
+
+            mainContent.querySelectorAll('section').forEach(section => {
+                const title = section.querySelector('h2')?.innerText || "";
+                if (title) output += format === 'md' ? `## ${title}\n\n` : `${title}\n--------------------------\n`;
+
+                // Process children sequentially
+                section.childNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Paragraphs
+                        if (node.tagName === 'P') {
+                            output += `${node.innerText}\n\n`;
+                        }
+                        // Endpoints
+                        if (node.classList.contains('endpoint-row')) {
+                            output += format === 'md' ? `> **Endpoint:** \`${node.innerText.trim()}\`\n\n` : `Endpoint: ${node.innerText.trim()}\n\n`;
+                        }
+                        // Code Blocks
+                        if (node.classList.contains('preview-window')) {
+                            const pre = node.querySelector('pre');
+                            if (pre) {
+                                // Extract code by joining lines
+                                const codeLines = Array.from(pre.querySelectorAll('.line'))
+                                    .map(line => line.innerText);
+                                const fullCode = codeLines.join('\n');
+
+                                if (format === 'md') {
+                                    output += "```\n" + fullCode + "\n```\n\n";
+                                } else {
+                                    output += "CODE BLOCK:\n" + fullCode + "\n\n";
+                                }
+                            }
+                        }
+                        // Tables
+                        if (node.classList.contains('table-container')) {
+                            const rows = Array.from(node.querySelectorAll('tr'));
+                            rows.forEach((row, i) => {
+                                const cells = Array.from(row.querySelectorAll('th, td')).map(c => c.innerText.trim());
+                                output += cells.join(' | ') + "\n";
+                                if (i === 0 && format === 'md') output += "--- | --- | --- | ---\n";
+                            });
+                            output += "\n";
+                        }
+                    }
+                });
+                output += "\n";
+            });
+
+            return output;
+        }
+
+        document.getElementById('downloadMd').onclick = () => {
+            const blob = new Blob([getCleanedContent('md')], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'koora-ai-docs-pro.md';
+            a.click();
+        };
+
+        document.getElementById('downloadTxt').onclick = () => {
+            const blob = new Blob([getCleanedContent('txt')], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'koora-ai-docs-pro.txt';
+            a.click();
+        };
+
+        // Global Search Logic (Sync with Main Header)
+        const mainSearch = document.getElementById('mainSearch');
+        if (mainSearch) {
+            mainSearch.oninput = (e) => {
+                const query = e.target.value.toLowerCase();
+                sections.forEach(section => {
+                    const text = section.innerText.toLowerCase();
+                    section.style.display = text.includes(query) ? 'block' : 'none';
+                });
+            };
+        }
+
+        // Mobile Menu Logic
+        const mobileToggle = document.getElementById('mobileToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', toggleMenu);
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', toggleMenu);
+        }
+
+        // Close menu when clicking a link (mobile)
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
